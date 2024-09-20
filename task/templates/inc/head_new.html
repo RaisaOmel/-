@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if user.is_authenticated %}
+            <div class="row">
+                <div class="col-md-1">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Задачи</a>
+                </div>
+                <div class="col-md-3">
+                    <p>Сортировка</p>
+                    <select name="sorted">
+                        <option value="0">срок выполнения</option>
+                        <option value="1">паритетность</option>
+                    </select>
+                    </a>
+                </div>
+
+                <div class="col-md-1">
+                    <a class="nav-link" href="{% url 'selection' %}">Отбор</a>
+                </div>
+                <div class="col-md-4">
+                    <form action="{% url 'search' %}" method="get">
+                        <input name="search" type="text" placeholder="Поиск...">
+                    </form>
+                </div>
+
+                <div class="col-md-1">
+                    <a class="nav-link" href="{% url 'add_task' %}">Новая</a>
+                </div>
+                <div class="col-md-2">
+                <span class="navbar-text-right">
+                    {{user.username}} | <a href="{% url 'logout' %}">Выйти</a>
+                 </span>
+                 </div>
+
+            </div>
+            {% else %}
+                <span class="navbar-text-right">
+                     <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'auth' %}">Войти</a>
+                </span>
+            {% endif %}
+        </div>
+
+    </div>
+        {% comment %}
+    {% if form.made is '1' %}
+    {{ form.made}}
+    {% endif %}
+    {{ form.made }}
+{{ form.made.field.choices.1.1 }}
+    {% endcomment %}
+</nav>

@@ -1,0 +1,9 @@
+asgiref==3.8.1
+construct==2.5.3
+Django==5.0.4
+djangorestframework==3.15.1
+pefile==2023.2.7
+python-ptrace==0.9.9
+six==1.16.0
+sqlparse==0.5.0
+tzdata==2024.1

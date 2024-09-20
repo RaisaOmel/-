@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% comment %}
+Задачи-{{block.super}}
+{% endcomment %}
+{{block.super}}
+{% endblock %}
+
+{% block content %}
+{% comment %}
+<h1>{{ mixin_str }}</h1>
+{{ last.pk }}  {{ last.title }}
+ {% endcomment %}
+
+{% for item in task %}
+<div class="card md-3" xmlns="http://www.w3.org/1999/html">
+    {% if item.made %}
+    <div class="card-header text-muted">
+        <div class="row">
+            <div class="col-md-2">
+                <p class="first">Срок: {{ item.performance|date:"d-m-Y" }}</p>
+            </div>
+            <div class="col-md-9">
+                {{ item.title }}
+            </div>
+            <div class="col-md-1">
+                <p class="last"> Сделано</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card-header text-primary">
+        <div class="row">
+            <div class="col-md-2">
+                <p class="first">Срок: {{ item.performance|date:"d-m-Y" }}</p>
+            </div>
+            <div class="col-md-9">
+                {{ item.title }}
+            </div>
+            <div class="col-md-1">
+                {% if item.parity %}
+                <p class="last"> Срочно</p>
+                {% else %}
+                <p class="last"> Несрочно</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+     {% endif %}
+    <div class="card-body">
+            {% autoescape off %}
+        <p class="card-text">{{ item.content|linebreaks|truncatewords:50 }}</p>
+        {% endautoescape %}
+        <div class="row">
+            <div class="col-md-1">
+                {% if item.made %}
+                    <a href="{{ item.get_absolute_url }}" class="btn btn-muted btn-block">Посмотреть</a>
+                {% else %}
+                    <a href="{{ item.get_absolute_url }}" class="btn btn-primary btn-block">Посмотреть</a>
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+            <p></p>
+             </div>
+            <div class="col-md-1">
+                 <a href="delete/{{ item.pk }}" class="btn btn-danger btn-block">Удалить</a>
+            </div>
+         </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+{% block navigation %}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        </li>
+        {% endif %}
+
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+        {% elif p >= page_obj.number|add:-3 and p <= page_obj.number|add:3 %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

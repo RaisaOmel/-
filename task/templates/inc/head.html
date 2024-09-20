@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'reset' %}">Задачи</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav me-auto mb-3 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_task' %}">Новая</a>
+                </li>
+
+                <li class="nav-item-search">
+                    <form action="{% url 'search' %}" method="get">
+                        <input name="search" type="text" placeholder="Поиск...">
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="selection/{{user.pk}}/">Настройки</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                 {{user.username}} | <a href="{% url 'logout' %}">Выйти</a>
+            </span>
+            {% else %}
+            <span class="navbar-text">
+                <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'auth' %}">Войти</a>
+            </span>
+            {% endif %}
+        </div>
+    </div>
+</nav>

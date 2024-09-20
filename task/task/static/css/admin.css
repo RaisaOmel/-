@@ -1,0 +1,15 @@
+#header{
+    background: #14D;
+}
+
+
+html[data-theme="light"], :root {
+    --secondary: #14D;
+}
+#site-name a:link, #site-name a:visited {
+    color: white;
+}
+
+#user-tools, #logout-form button {
+    color: red;
+}
